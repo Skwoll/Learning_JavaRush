@@ -35,10 +35,16 @@ public class Solution {
     public static void sort(int[] array) {
         //напишите тут ваш код
         Arrays.sort(array);
-        ArrayList<Integer> tmp = new ArrayList<>();
-        for (int x : array) {
-            tmp.add(x);
-         array = tmp.toArray();
+        //int[] tmp = new int[array.length];
+        for (int i = 0; i < array.length / 2; i++) {
+            int temp = array[i];
+            // swap numbers
+            array[i] = array[array.length - 1 - i];
+            array[array.length - 1 - i] = temp;
+
+            //array[array.length-1-i] ^= array[i] ^= array[array.length-1-i];
+        }
+
     }
 }
 
