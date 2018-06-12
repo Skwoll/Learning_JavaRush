@@ -1,16 +1,11 @@
 package com.javarush.task.task08.task0817;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Map;
 
 /* 
 Нам повторы не нужны
-Создать словарь (Map<String, String>) занести в него десять записей по принципу "фамилия" - "имя".
-Удалить людей, имеющих одинаковые имена.
-
-
-Требования:
 1. Программа не должна выводить текст на экран.
 2. Программа не должна считывать значения с клавиатуры.
 3. Класс Solution должен содержать только четыре метода.
@@ -30,22 +25,15 @@ public class Solution {
 
     }
 
-    public static void removeTheFirstNameDuplicates(HashMap<String, String> map) {
+    public static void removeTheFirstNameDuplicates(Map<String, String> map) {
         //напишите тут ваш код
-        Iterator<HashMap.Entry<String,String>> i = map.entrySet().iterator();
-
-
-        while (i.hasNext()) {
-            HashMap.Entry curr = i.next();
-            removeItemFromMapByValue(map, curr.getValue().toString());
-        }
-
-
-//        map.forEach((s, s2) -> removeItemFromMapByValue(map, s2));
+        String[] names = map.values().toArray(new String[0]);
+        HashSet<String> tmp = new HashSet<>();
+        for (String s : names)  if (!tmp.add(s)) removeItemFromMapByValue(map,s);
 
     }
 
-    public static void removeItemFromMapByValue(HashMap<String, String> map, String value) {
+    public static void removeItemFromMapByValue(Map<String, String> map, String value) {
         HashMap<String, String> copy = new HashMap<String, String>(map);
         for (Map.Entry<String, String> pair : copy.entrySet()) {
             if (pair.getValue().equals(value))
@@ -54,9 +42,6 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        HashMap<String, String> map = createMap();
-        removeTheFirstNameDuplicates(map);
-        map.forEach((s, s2) -> System.out.println(s+" - "+s2));
 
     }
 }
