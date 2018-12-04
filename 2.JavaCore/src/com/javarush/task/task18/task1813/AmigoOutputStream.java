@@ -1,9 +1,6 @@
 package com.javarush.task.task18.task1813;
 
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.channels.FileChannel;
 
 /* 
@@ -55,15 +52,19 @@ public class AmigoOutputStream extends FileOutputStream {
         return fileOutputStream.getChannel();
     }
 
-
-
-    public  AmigoOutputStream(FileOutputStream fileOutputStream) {
-        this.fileOutputStream = fileOutputStream;
+    public AmigoOutputStream(FileOutputStream fileOutputStream1) throws FileNotFoundException {
+        super(fileName);
+        this.fileOutputStream = fileOutputStream1;
     }
+
+
 
     public static void main(String[] args) throws FileNotFoundException {
         new AmigoOutputStream(new FileOutputStream(fileName));
     }
 
-
+    @Override
+    public void flush() throws IOException {
+        fileOutputStream.flush();
+    }
 }
