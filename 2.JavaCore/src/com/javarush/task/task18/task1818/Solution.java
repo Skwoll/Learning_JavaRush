@@ -32,15 +32,16 @@ public class Solution {
             FileOutputStream fileOutputStream = new FileOutputStream(file1);
 
             byte[] buffer = new byte[100];
+            int cnt;
 
             while (fileInputStream1.available()>0) {
-                fileInputStream1.read(buffer);
-                fileOutputStream.write(buffer);
+               cnt = fileInputStream1.read(buffer);
+                fileOutputStream.write(buffer,0,cnt);
             }
 
             while (fileInputStream2.available()>0) {
-                fileInputStream2.read(buffer);
-                fileOutputStream.write(buffer);
+                cnt = fileInputStream2.read(buffer);
+                fileOutputStream.write(buffer,0,cnt);
             }
 
             fileInputStream1.close();
