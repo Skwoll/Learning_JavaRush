@@ -42,15 +42,12 @@ public class Solution {
     public static void main(String[] args)throws Exception {
         if (args.length==1) {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(args[0]));
-            DateFormat df = new SimpleDateFormat("DD m yyyy",Locale.ENGLISH);
+            DateFormat df = new SimpleDateFormat("d M y",Locale.ENGLISH);
 
             while (bufferedReader.ready()){
-                String buffer = bufferedReader.readLine();
-                Matcher m = Pattern.compile("\\d.").matcher(buffer);
-
-                int separator = m.find()? m.start() : buffer.length();
-
-                PEOPLE.add(new Person(buffer.substring(0,separator-1).trim(),df.parse(buffer.substring(separator).trim())));
+                 Matcher m = Pattern.compile("^(.*) (\\d{1,2} \\d{1,2} \\d{4})$").matcher(bufferedReader.readLine());
+                 m.find();
+                PEOPLE.add(new Person(m.group(1).trim(),df.parse(m.group(2).trim())));
             }
             bufferedReader.close();
             PEOPLE.forEach(person -> System.out.println(person.getName()+" "+ df.format(person.getBirthDate())));
