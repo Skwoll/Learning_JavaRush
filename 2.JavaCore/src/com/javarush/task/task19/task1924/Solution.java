@@ -65,7 +65,7 @@ public class Solution {
             String tmp = bufferedFileReader.readLine();
             for (Map.Entry<Integer,String> m :
                  map.entrySet()) {
-                tmp = tmp.replaceAll(" "+m.getKey()+" "," "+m.getValue()+" ");
+                tmp = tmp.replaceAll("((^|\\s)"+m.getKey()+"(\\s|$))"," "+m.getValue()+" ");
             }
             System.out.println(tmp);
         }
