@@ -40,6 +40,52 @@ public class Solution {
     }
 
     public static int getRectangleCount(byte[][] a) {
-        return 0;
+
+        int count = 0;
+        int iStart = 0;
+        int iEnd = 0;
+        int jStart = 0;
+        int jEnd = 0;
+
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[1].length; j++) {
+                if(a[i][j]==1){
+                    iStart = iEnd= i;
+                    jStart = jEnd= j;
+
+                    count++;
+                    a[i][j]=0;
+                    for (int k = j+1; k <a[1].length ; k++) {
+                        if (a[i][k] == 0){
+                            break;
+                        }else{
+                            a[i][k]=0;
+                            jEnd = k;
+                        }
+
+                    }
+                    for (int k = i+1; k <a.length ; k++) {
+                        if(a[k][jEnd]==0){
+                            break;
+                        }else {
+                            a[k][jEnd]=0;
+                            iEnd = k;
+                        }
+
+                    }
+                    for (int k = iStart+1; k <=iEnd ; k++) {
+                        for (int l = jStart; l <jEnd ; l++) {
+                            a[k][l]=0;
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+
+        return count;
     }
 }
