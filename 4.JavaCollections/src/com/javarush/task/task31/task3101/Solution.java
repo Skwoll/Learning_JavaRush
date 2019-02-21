@@ -1,12 +1,7 @@
 package com.javarush.task.task31.task3101;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.file.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,25 +35,28 @@ public class Solution {
         File outFile = new File(sourceFile.getParent()+"/allFilesContent.txt");
         List<File> files;
 
+        FileUtils.deleteFile(outFile);
+        FileUtils.renameFile(sourceFile, outFile );
+
         files = Files.find(Paths.get(args[0]), Integer.MAX_VALUE, (p, bfa) -> bfa.isRegularFile()
                 && bfa.size() <=50).sorted(Comparator.comparing(Path::getFileName)).map(Path::toFile)
                 .collect(Collectors.toList());
 
-        if (FileUtils.isExist(outFile)){
-            FileUtils.deleteFile(outFile);
-            FileUtils.renameFile(sourceFile, outFile );
-        }
+
+
+//        files.forEach(System.out::println);
 
         FileWriter fileWriter = new FileWriter(outFile,true);
         for (File f: files
              ) {
+//            Files.write(outFile.toPath(),Files.readAllLines(f.toPath()), StandardOpenOption.APPEND);
             FileReader fileReader = new FileReader(f);
-            char[] buffer = new char[100];
+            char[] buffer = new char[1000];
             int cnt = fileReader.read(buffer);
-            if(cnt>0) {
-                fileWriter.write(buffer, 0, cnt - 1);
+            if(cnt>=0) {
+                fileWriter.write(buffer, 0, cnt );
+                fileWriter.write("\n");
             }
-            fileWriter.write("\n");
             fileWriter.flush();
             fileReader.close();
         }
