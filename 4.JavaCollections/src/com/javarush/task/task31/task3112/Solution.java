@@ -29,8 +29,8 @@ https://pacemook.com/photos/image1.jpg
 public class Solution {
 
     public static void main(String[] args) throws IOException {
-//        Path passwords = downloadFile("https://javarush.ru/testdata/secretPasswords.txt", Paths.get("D:/MyDownloads"));
-        Path passwords = downloadFile("https://javarush.ru/testdata/secretPasswords.txt", Paths.get("c:/tmp/out"));
+        Path passwords = downloadFile("https://javarush.ru/testdata/secretPasswords.txt", Paths.get("D:/MyDownloads"));
+//        Path passwords = downloadFile("https://javarush.ru/testdata/secretPasswords.txt", Paths.get("c:/tmp/out"));
 
         for (String line : Files.readAllLines(passwords)) {
             System.out.println(line);
