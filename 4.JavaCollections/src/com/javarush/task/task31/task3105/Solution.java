@@ -4,14 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -54,24 +51,43 @@ public class Solution {
             return;
         }
 
-        ZipInputStream zipIn = new ZipInputStream(new FileInputStream(args[1]));
-        HashMap<String, ByteArrayOutputStream> files = MyArch.unzip(zipIn);
-        zipIn.close();
-//        files.forEach((s, byteArrayOutputStream) -> System.out.println(s+"\n"+byteArrayOutputStream.toString()));
+        HashMap<String, ByteArrayOutputStream> files;
+        try(ZipInputStream zipIn = new ZipInputStream(new FileInputStream(args[1]))) {
+             files = unzip(zipIn);
+        }
         try(ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(args[1]))) {
 
             Path filename = Paths.get(args[0]);
             files.remove("new/" + filename.toFile().getName());
             zipOut.putNextEntry(new ZipEntry("new/" + filename.toFile().getName()));
             Files.copy(filename, zipOut);
+            zipOut.closeEntry();
 
             for (Map.Entry<String, ByteArrayOutputStream> set : files.entrySet()
             ) {
                 zipOut.putNextEntry(new ZipEntry(set.getKey()));
                 zipOut.write(set.getValue().toByteArray());
+                zipOut.closeEntry();
             }
 
         }
 
+    }
+    public static HashMap<String, ByteArrayOutputStream> unzip (ZipInputStream in) throws IOException {
+        HashMap<String, ByteArrayOutputStream> files = new HashMap<>();
+
+        ZipEntry tmpZip ;
+        while ((tmpZip = in.getNextEntry()) != null){
+            ByteArrayOutputStream tmpByte = new ByteArrayOutputStream();
+            byte[] buffer = new byte[8192];
+            int len;
+            while ((len = in.read(buffer))!= -1){
+                tmpByte.write(buffer,0,len);
+                if(!tmpZip.isDirectory()) {
+                    files.put(tmpZip.getName(), tmpByte);
+                }
+            }
+        }
+        return files;
     }
 }
