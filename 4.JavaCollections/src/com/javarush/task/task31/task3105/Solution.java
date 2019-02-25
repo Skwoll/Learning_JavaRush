@@ -58,19 +58,20 @@ public class Solution {
         HashMap<String, ByteArrayOutputStream> files = MyArch.unzip(zipIn);
         zipIn.close();
 //        files.forEach((s, byteArrayOutputStream) -> System.out.println(s+"\n"+byteArrayOutputStream.toString()));
-        ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(args[1]));
+        try(ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(args[1]))) {
 
-        Path filename = Paths.get(args[0]);
-        files.remove("new/" + filename.toFile().getName());
-        zipOut.putNextEntry(new ZipEntry("new/"+filename.toFile().getName()));
-        Files.copy(filename,zipOut);
+            Path filename = Paths.get(args[0]);
+            files.remove("new/" + filename.toFile().getName());
+            zipOut.putNextEntry(new ZipEntry("new/" + filename.toFile().getName()));
+            Files.copy(filename, zipOut);
 
-        for (Map.Entry<String,ByteArrayOutputStream> set : files.entrySet()
-             ) {
-            zipOut.putNextEntry(new ZipEntry(set.getKey()));
-            zipOut.write(set.getValue().toByteArray());
+            for (Map.Entry<String, ByteArrayOutputStream> set : files.entrySet()
+            ) {
+                zipOut.putNextEntry(new ZipEntry(set.getKey()));
+                zipOut.write(set.getValue().toByteArray());
+            }
+
         }
-        zipOut.close();
 
     }
 }
