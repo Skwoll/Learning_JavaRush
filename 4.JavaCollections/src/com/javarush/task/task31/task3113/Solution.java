@@ -35,20 +35,20 @@ import java.nio.file.Paths;
 */
 public class Solution {
 
-    static long fileCount = 0;
-    static long folderSize = 0;
-    static long dirCount =0;
     public static void main(String[] args) throws IOException {
+        long fileCount = 0;
+        long folderSize = 0;
+        long dirCount = 0;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
         String stringPath = bufferedReader.readLine();
+        bufferedReader.close();
         Path dir = Paths.get(stringPath);
 
         if(!Files.isDirectory(dir)){
             System.out.println(dir.toString()+ " - не папка");
             return;
         }
-
 //        Files.find(dir, Integer.MAX_VALUE,(path, bfa) -> bfa.isRegularFile(), FileVisitOption.FOLLOW_LINKS).forEach(path -> { fileCount++;
 //        folderSize+=path.toFile().length();});
 //        Files.find(dir, Integer.MAX_VALUE,(path, bfa) -> bfa.isDirectory(), FileVisitOption.FOLLOW_LINKS).forEach(path -> { dirCount++;});
