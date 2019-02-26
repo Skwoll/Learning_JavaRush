@@ -28,12 +28,16 @@ import java.util.*;
 2. В классе CustomTree должны быть переопределены методы add(String s) и size().
 3. После добавления N элементов в дерево с помощью метода add, метод size должен возвращать N.
 4. Метод getParent должен возвращать имя родителя для любого элемента дерева.
+Построй дерево(5)
+1. После удаления последнего добавленного элемента из дерева с помощью метода remove, метод size должен возвращать N-1.
+2. После удаления второго элемента добавленного в дерево, метод size должен возвращать N/2 + 1 (для случаев где N > 2 и является степенью двойки), N - размер дерева до удаления.
+3. Если переданный объект не является строкой, метод remove() должен бросить UnsupportedOperationException.
+4. Если ни один элемент не способен иметь потомков, необходимо восстановить такую возможность.
 */
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
 
     //region Attributes
     Entry<String> root;
-    int size;
     //endregion
 
     //region Methods
@@ -57,26 +61,35 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         Queue<Entry> queue = new LinkedList<>();
 
         while (!added){
-            currentEntry.checkChildren();
+            if(!currentEntry.isAvailableToAddChildren() && currentEntry.leftChild == null && currentEntry.rightChild == null){
+                currentEntry.availableToAddLeftChildren=true;
+                currentEntry.availableToAddRightChildren=true;
+            }
+
             if(currentEntry.isAvailableToAddChildren()){
                 if (currentEntry.availableToAddLeftChildren) {
                     currentEntry.leftChild = new Entry<>(s);
                     currentEntry.leftChild.parent = currentEntry;
+                    currentEntry.availableToAddLeftChildren = false;
                     added = true;
                 }else{
                     currentEntry.rightChild = new Entry<>(s);
                     currentEntry.rightChild.parent = currentEntry;
+                    currentEntry.availableToAddRightChildren = false;
                     added = true;
                 }
             }else {
-                queue.add(currentEntry.leftChild);
-                queue.add(currentEntry.rightChild);
+                if(currentEntry.leftChild != null){
+                    queue.add(currentEntry.leftChild);
+                }
+                if (currentEntry.rightChild != null) {
+                    queue.add(currentEntry.rightChild);
+                }
                 if (!queue.isEmpty()){
                     currentEntry = queue.poll();
                 }
             }
         }
-        this.size++;
 
         return added;
     }
@@ -85,7 +98,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         Entry<String> currentEntry;
         Queue<Entry> queue = new LinkedList<>();
         queue.add(root);
-        String name = "";
+        String name = "null";
 
         while (!queue.isEmpty()){
                 currentEntry = queue.poll();
@@ -94,24 +107,59 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
                 name = currentEntry.parent.elementName;
                 break;
             }
-            currentEntry.checkChildren();
+            if (currentEntry.leftChild != null) {
 
-            if (!currentEntry.availableToAddLeftChildren) {
                 queue.add(currentEntry.leftChild);
-                }
-            if (!currentEntry.availableToAddRightChildren){
+            }
+            if (currentEntry.rightChild != null){
                 queue.add(currentEntry.rightChild);
             }
-
         }
-
         return name;
     }
 
     @Override
     public void add(int index, String element) {
         throw new UnsupportedOperationException();
-//        super.add(index, element);
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (!(o instanceof String)){
+            throw new UnsupportedOperationException();
+        }
+        boolean deleted = false;
+        Entry<String> currentEntry;
+        Queue<Entry> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()){
+            currentEntry = queue.poll();
+            if (currentEntry.elementName.equals(o))
+            {
+                if(currentEntry.parent.leftChild==currentEntry){
+                    currentEntry.parent.leftChild=null;
+                }
+                if(currentEntry.parent.rightChild==currentEntry){
+                    currentEntry.parent.rightChild=null;
+                }
+
+                deleted = true;
+                break;
+            }
+
+//            currentEntry.checkChildren();
+
+            if (currentEntry.leftChild != null) {
+                queue.add(currentEntry.leftChild);
+            }
+            if (currentEntry.rightChild != null){
+                queue.add(currentEntry.rightChild);
+            }
+        }
+
+        return deleted;
+
     }
 
     @Override
@@ -140,6 +188,22 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
     @Override
     public int size() {
+        Entry<String> currentEntry;
+        Queue<Entry> queue = new LinkedList<>();
+        queue.add(root);
+        int size = -1;
+
+        while (!queue.isEmpty()){
+            currentEntry = queue.poll();
+            size++;
+            if (currentEntry.leftChild != null) {
+
+                queue.add(currentEntry.leftChild);
+            }
+            if (currentEntry.rightChild != null){
+                queue.add(currentEntry.rightChild);
+            }
+        }
         return size;
     }
     //endregion
@@ -148,7 +212,6 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     public CustomTree (){
         root = new Entry<>("Noname");
         root.lineNumber = 1;
-        size = 0;
     }
     //endregion
 
