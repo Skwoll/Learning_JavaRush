@@ -1,6 +1,7 @@
 package com.javarush.task.task22.task2213;
 
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 /**
  * Класс Tetris - содержит основной функционал игры.
@@ -81,13 +82,20 @@ public class Tetris {
      */
     public void step() {
         //опускам фигурку вниз
-
+        figure.down();
         //если разместить фигурку на текущем месте невозможно:
-        //поднимаем обратно
-        //приземляем
-        //если фигурка приземлилась на самом верху - игра окончена
-        //удаляем заполненные линии
-        //создаем новую фигурку
+        if (!figure.isCurrentPositionAvailable()) {
+            //поднимаем обратно
+            figure.up();
+            //приземляем
+            figure.landed();
+            //если фигурка приземлилась на самом верху - игра окончена
+            isGameOver = figure.getY()==0;
+            //удаляем заполненные линии
+            field.removeFullLines();
+            //создаем новую фигурку
+            figure = FigureFactory.createRandomFigure(field.getWidth() / 2, 0);
+        }
 
     }
 
@@ -108,19 +116,8 @@ public class Tetris {
     public static Tetris game;
 
     public static void main(String[] args) throws Exception {
-        int[][] ar = {{0,1,0},{1,1,1},{1,0,1},{1,1,1},{1,0,1}};
-        tmp = new Field(5,3);
 
-        for (int y = 0; y < 5; y++) {
-            for (int x = 0; x < 3; x++) {
-                tmp.setValue(x,y,ar[y][x]);
-            }
-        }
-
-        System.out.println(tmp.getMatrix());
-        tmp.removeFullLines();
-        System.out.println(tmp.getMatrix());
-//        game = new Tetris(10, 20);
-//        game.run();
+        game = new Tetris(10, 20);
+        game.run();
     }
 }

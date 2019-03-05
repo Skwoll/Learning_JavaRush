@@ -1,8 +1,6 @@
 package com.javarush.task.task22.task2213;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Класс Field описывает "поле клеток" игры Тетрис
@@ -107,26 +105,28 @@ public class Field {
      * Удаляем заполненные линии
      */
     public void removeFullLines() {
-        //Например так:
         //Создаем список для хранения линий
-        List<int[]> lines =new ArrayList<>();
+        ArrayList<int[]> lines = new ArrayList<int[]>();
+
         //Копируем все непустые линии в список.
-        for (int y = 0; y < height; y++) {
-            boolean copy = true;
-            for (int x = 0; x < width; x++) {
-                if(matrix[y][x]==0){
-                    copy = false;
-                }
+        for (int i = 0; i < height; i++) {
+            //подсчитываем количество единиц в строке - просто суммируем все ее значения
+            int count = 0;
+            for (int j = 0; j < width; j++) {
+                count += matrix[i][j];
             }
-            if (copy){
-                lines.add(matrix[y]);
-            }
+
+            //Если сумма строки не равна ее ширине - добавляем в список
+            if (count != width)
+                lines.add(matrix[i]);
         }
+
         //Добавляем недостающие строки в начало списка.
-        while (lines.size()<height){
-            lines.add(0,new int[width]);
+        while (lines.size() < height) {
+            lines.add(0, new int[width]);
         }
+
         //Преобразуем список обратно в матрицу
-        matrix=(int[][])lines.toArray();
+        matrix = lines.toArray(new int[height][width]);
     }
 }
