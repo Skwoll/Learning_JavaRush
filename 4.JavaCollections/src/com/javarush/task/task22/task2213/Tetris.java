@@ -1,17 +1,16 @@
 package com.javarush.task.task22.task2213;
 
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 
 /**
  * Класс Tetris - содержит основной функционал игры.
  */
 public class Tetris {
+
     private Field field;                //Поле с клетками
     private Figure figure;              //Фигурка
 
     private boolean isGameOver;         //Игра Окончена?
-    private static Field tmp;
 
     public Tetris(int width, int height) {
         field = new Field(width, height);
@@ -77,26 +76,21 @@ public class Tetris {
         System.out.println("Game Over");
     }
 
-    /**
-     * Один шаг игры
-     */
     public void step() {
-        //опускам фигурку вниз
+        //опускаем фигурку вниз
         figure.down();
-        //если разместить фигурку на текущем месте невозможно:
-        if (!figure.isCurrentPositionAvailable()) {
-            //поднимаем обратно
-            figure.up();
-            //приземляем
-            figure.landed();
-            //если фигурка приземлилась на самом верху - игра окончена
-            isGameOver = figure.getY()==0;
-            //удаляем заполненные линии
-            field.removeFullLines();
-            //создаем новую фигурку
-            figure = FigureFactory.createRandomFigure(field.getWidth() / 2, 0);
-        }
 
+        //если разместить фигурку на текущем месте невозможно
+        if (!figure.isCurrentPositionAvailable()) {
+            figure.up();                    //поднимаем обратно
+            figure.landed();                //приземляем
+
+            isGameOver = figure.getY() <= 1;//если фигурка приземлилась на самом верху - игра окончена
+
+            field.removeFullLines();        //удаляем заполненные линии
+
+            figure = FigureFactory.createRandomFigure(field.getWidth() / 2, 0); //создаем новую фигурку
+        }
     }
 
     /**
@@ -116,7 +110,6 @@ public class Tetris {
     public static Tetris game;
 
     public static void main(String[] args) throws Exception {
-
         game = new Tetris(10, 20);
         game.run();
     }
