@@ -2,6 +2,8 @@ package com.javarush.task.task33.task3304;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -34,6 +36,7 @@ public class Solution {
 
     public static Object convertOneToAnother(Object one, Class resultClassObject) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(MapperFeature.USE_ANNOTATIONS);
         StringWriter writer = new StringWriter();
 
         mapper.writeValue(writer,one);
