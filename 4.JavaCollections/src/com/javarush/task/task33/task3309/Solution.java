@@ -1,24 +1,16 @@
 package com.javarush.task.task33.task3309;
 
-import com.sun.java.browser.plugin2.DOM;
-import com.sun.xml.internal.messaging.saaj.util.FastInfosetReflection;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.ContentHandler;
+import org.w3c.dom.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -29,16 +21,21 @@ import java.io.StringWriter;
 */
 public class Solution {
     public static String toXmlWithComment(Object obj, String tagName, String comment) {
-        String out;
+        String out = "";
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
             DocumentBuilder db = factory.newDocumentBuilder();
             Document doc = db.newDocument();
 
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.STANDALONE,"no");
+            transformer.setOutputProperty(OutputKeys.CDATA_SECTION_ELEMENTS,"yes");
+            transformer.setOutputProperty(OutputKeys.INDENT,"yes");
 
             JAXBContext context = JAXBContext.newInstance(obj.getClass());
             Marshaller marshaller = context.createMarshaller();
+//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
 
             marshaller.marshal(obj,doc);
 
@@ -49,16 +46,22 @@ public class Solution {
                 String nodeName = n.getNodeName();
                 Comment co = doc.createComment(comment);
                 if (n.getNodeName().equals(tagName)){
-                    n.insertBefore(co,n.get);
-//                    n.appendChild(co);
+                    n.getParentNode().insertBefore(co,n);
+
+                }
+
+                if(n.getFirstChild().getNodeType() == Node.TEXT_NODE &&
+                        n.getFirstChild().getTextContent().matches(".*[<>&'\"].*")){
+                    CDATASection cdataSection = doc.createCDATASection(n.getFirstChild().getTextContent());
+                    n.setTextContent("");
+                    n.appendChild(cdataSection);
                 }
             }
             StringWriter sw = new StringWriter();
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.STANDALONE,"no");
+
             transformer.transform(new DOMSource(doc), new StreamResult(sw));
             out = sw.toString();
-            System.out.println(out);
+//            System.out.println(out);
 
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -70,14 +73,14 @@ public class Solution {
             e.printStackTrace();
         }
 
-        return "";
+        return out;
     }
 
     public static void main(String[] args) {
         Cat cat = new Cat();
         cat.name = "Cats";
         cat.age = 10;
-        toXmlWithComment(cat,"name","tmp comment");
+        System.out.println(toXmlWithComment(cat,"item","tmp comment"));
 
     }
 
@@ -85,6 +88,14 @@ public class Solution {
     @XmlRootElement
     public static class Cat {
         public String name;
+        @XmlElement(name = "item")
+        public String item1 = "asdasds";
+        @XmlElement(name = "item")
+        public String item2 = "<asdasfasfds>";
+        @XmlElement(name = "item")
+        public String item3 = "<![CDATA[need CDATA because of <item />]]>";
+        @XmlElement(name = "item")
+        public String item4 = "sdfdsfasasdas & <dsfds.>";
         public int age;
         public int weight;
 
