@@ -14,30 +14,33 @@ public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
         solution.recurse("sin(2*(-5+1.5*4)+28)", 0); //expected output 0.5 6
+        solution.recurse("sin( 2 *( -5 +1.5*4)+28) + cos(4+(8-10*2)+10)", 0); //expected output 0.5 6
 
     }
 
     public void recurse(final String expression, int countOperation) {
         //implement
         if (countOperation != 0){
-            System.out.println(expression);
+            System.out.println(expression + " "+countOperation);
+            return;
+        }
+
+        Matcher m = Pattern.compile("(sin|cos|tan|\\^|\\/|\\*|\\-|\\+){1}?").matcher(expression);
+        while(m.find()){
+            countOperation++;
         }
 
         char[] signs = {'^', '/', '*', '-', '+'};
         StringBuilder tmpExp = new StringBuilder();
         tmpExp.append(expression.replaceAll("\\s",""));
         Stack<Integer> stack = new Stack<>();
-
         int lastindex = -1;
         while (tmpExp.indexOf("(")>=0) {
             Matcher mExp = Pattern.compile("(\\(|\\))").matcher(tmpExp);
-            Matcher m;
-
             if (mExp.find(lastindex+1)) {
 
                 lastindex = mExp.start(1);
             }
-
             if (mExp.group(1).equals("(")){
                 stack.push(lastindex);
             }else if (mExp.group(1).equals(")")){
@@ -73,18 +76,16 @@ public class Solution {
                         }
                         result = new BigDecimal(result).setScale(4, RoundingMode.HALF_UP).doubleValue();
                         subExp = m.replaceFirst(String.valueOf(result));
-                        System.out.println(subExp);
-
                     }
                 }
                 tmpExp = tmpExp.replace(start+1,lastindex,subExp);
-
                 m = Pattern.compile("(sin|cos|tan)\\((-?\\d+\\.?\\d*\\))").matcher(tmpExp);
                 while (m.find()){
                     subExp = m.group();
                     double result = Double.parseDouble(subExp.substring(4,subExp.length()-1));
 
-                    switch (subExp.substring(0, 2)) {
+                    result = Math.toRadians(result);
+                    switch (subExp.substring(0, 3)) {
                         case "sin":
                             result = Math.sin(result);
                             break;
@@ -96,27 +97,25 @@ public class Solution {
                             break;
                     }
                     result = new BigDecimal(result).setScale(4, RoundingMode.HALF_UP).doubleValue();
-                    m.replaceFirst(String.valueOf(result));
+                    tmpExp.replace(0,tmpExp.length(),m.replaceFirst(String.valueOf(result)));
                 }
-
                 m = Pattern.compile("([-+])\\(((\\1)\\d+\\.?\\d*\\))").matcher(tmpExp);
                 while (m.find()){
-                    m.replaceFirst(String.valueOf(m.group().substring(3,m.group().length()-1)));
+                    tmpExp.replace(0,tmpExp.length(), m.replaceFirst(m.group().substring(3,m.group().length()-1)));
                 }
-
                 m = Pattern.compile("(?<!\\d)\\(([-+]?\\d+\\.?\\d*\\))").matcher(tmpExp);
                 while (m.find()){
-                    m.replaceFirst(String.valueOf(m.group().substring(3,m.group().length()-1)));
+                    tmpExp.replace(0,tmpExp.length(), m.replaceFirst(m.group().substring(1,m.group().length()-1)));
                 }
                 m = Pattern.compile("\\(([-+]?\\d+\\.?\\d*\\))").matcher(tmpExp);
                 while (m.find()){
-                    m.replaceFirst(String.valueOf(m.group().substring(1,m.group().length()-1)));
+                    tmpExp.replace(0,tmpExp.length(), m.replaceFirst(m.group().substring(1,m.group().length()-1)));
                 }
-
                 lastindex = lastindex == tmpExp.length() ? 0:start;
-
-                System.out.println(tmpExp);
             }
+        }
+        if (countOperation > 0) {
+            recurse(tmpExp.toString(),countOperation);
         }
     }
 
