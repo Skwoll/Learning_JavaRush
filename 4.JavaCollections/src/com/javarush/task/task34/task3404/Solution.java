@@ -2,8 +2,6 @@ package com.javarush.task.task34.task3404;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,20 +37,20 @@ public class Solution {
         StringBuilder tmpExp = new StringBuilder();
         tmpExp.append(expression.replaceAll("\\s",""));
         Stack<Integer> stack = new Stack<>();
-        int lastindex = -1;
+        int lastIndex = -1;
         while (tmpExp.indexOf("(")>=0) {
             Matcher mExp = Pattern.compile("(\\(|\\))").matcher(tmpExp);
-            if (mExp.find(lastindex+1)) {
+            if (mExp.find(lastIndex+1)) {
 
-                lastindex = mExp.start(1);
+                lastIndex = mExp.start(1);
             }
             if (mExp.group(1).equals("(")){
-                stack.push(lastindex);
+                stack.push(lastIndex);
             }else if (mExp.group(1).equals(")")){
                 if (stack.empty())
                     break;
                 int start = stack.pop();
-                String subExp = tmpExp.substring(start + 1, lastindex);
+                String subExp = tmpExp.substring(start + 1, lastIndex);
                 for (char c : signs) {
                     String pattern = String.format("-?\\d+\\.?\\d*\\%s-?\\d+\\.?\\d*", c);
                     Pattern p = Pattern.compile(pattern);
@@ -83,7 +81,7 @@ public class Solution {
                         subExp = m.replaceFirst(String.valueOf(result));
                     }
                 }
-                tmpExp = tmpExp.replace(start+1,lastindex,subExp);
+                tmpExp = tmpExp.replace(start+1,lastIndex,subExp);
                 m = Pattern.compile("(sin|cos|tan)\\((-?\\d+\\.?\\d*\\))").matcher(tmpExp);
                 while (m.find()){
                     subExp = m.group();
@@ -117,7 +115,7 @@ public class Solution {
                 while (m.find()){
                     tmpExp.replace(0,tmpExp.length(), m.replaceFirst(m.group().substring(1,m.group().length()-1)));
                 }
-                lastindex = lastindex == tmpExp.length() ? 0:start;
+                lastIndex = lastIndex == tmpExp.length() ? 0:start;
             }
         }
 
