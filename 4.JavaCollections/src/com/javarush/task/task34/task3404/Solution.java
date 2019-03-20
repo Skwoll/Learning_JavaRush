@@ -43,7 +43,11 @@ public class Solution {
 
         solution.recurse("-(-22+22*2) ", 0); //expected output -22 4
         solution.recurse("-2^(-2)", 0); //expected output -0.25 3
-        solution.recurse("-(-2^(-2))+2+(-(-2^(-2)))", 0); //expected output 2.5 10
+        solution.recurse("-(-2^(-2))+2+(-(-2^(-2)))", 0); //expected output 1.5 10
+        solution.recurse("(-2)*(-2)", 0); //expected output 4 3
+        solution.recurse("(-2)/(-2)", 0); //expected output 1 3
+        solution.recurse("(-2)/(-2)", 0); //expected output 1 3
+        solution.recurse("sin(-30)", 0); //expected output -0.5 2
 
         solution.recurse("tan(2025 ^ 0.5)", 0); //expected output 1 2
         solution.recurse("0+0.304", 0); //expected output 0.3 1
