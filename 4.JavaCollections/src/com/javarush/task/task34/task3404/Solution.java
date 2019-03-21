@@ -21,7 +21,7 @@ public class Solution {
 
         solution.recurse("sin(2*(-5+1.5*4)+28)", 0); //expected output 0.5 6
         solution.recurse("tan(45)", 0); //expected output 1 1
-        solution.recurse("tan(-45)", 0); //expected output -1 1
+        solution.recurse("tan(-45)", 0); //expected output -1 2
         solution.recurse("0.305", 0); //expected output 0.3 0
         solution.recurse("0.3051", 0); //expected output 0.31 0
         solution.recurse("(0.3051)", 0); //expected output 0.31 0
@@ -48,9 +48,15 @@ public class Solution {
         solution.recurse("(-2)/(-2)", 0); //expected output 1 3
         solution.recurse("(-2)/(-2)", 0); //expected output 1 3
         solution.recurse("sin(-30)", 0); //expected output -0.5 2
+        solution.recurse("cos(-30)", 0); //expected output -0.87 2
+        solution.recurse("tan(-30)", 0); //expected output -0.58 2
+        solution.recurse("2+8*(9/4-1.5)^(1+1)", 0); //expected output 6.5 6
+        solution.recurse("0.005 ", 0); //expected output 0.01 0
+        solution.recurse("0.0049 ", 0); //expected output 0 0
+        solution.recurse("0+0.304", 0); //expected output 0.3 1
+        solution.recurse("sin(45) - cos(45)", 0); //expected output 0 3
 
         solution.recurse("tan(2025 ^ 0.5)", 0); //expected output 1 2
-        solution.recurse("0+0.304", 0); //expected output 0.3 1
 
 
 
