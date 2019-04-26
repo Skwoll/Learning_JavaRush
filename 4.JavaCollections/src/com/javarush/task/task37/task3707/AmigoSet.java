@@ -1,5 +1,8 @@
 package com.javarush.task.task37.task3707;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Consumer;
@@ -90,5 +93,36 @@ public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneab
     @Override
     public int size() {
         return map.size();
+    }
+
+    private void writeObject (ObjectOutputStream stream){
+        try {
+            stream.defaultWriteObject();
+            stream.writeObject(HashMapReflectionHelper.callHiddenMethod(map,"capacity"));
+            stream.writeObject(HashMapReflectionHelper.callHiddenMethod(map,"loadFactor"));
+            stream.writeObject(map.size());
+            for (E e:map.keySet()){
+                stream.writeObject(e);
+            }
+        } catch (Exception e) {
+        }
+    }
+    private void readObject (ObjectInputStream stream){
+
+        try {
+            stream.defaultReadObject();
+            int Capacity = (int)stream.readObject();
+            float LoadFactor = (float) stream.readObject();
+            int Size = (int)stream.readObject();
+            this.map = new HashMap<>(Capacity, LoadFactor);
+            for (int i = 0; i < Size; i++) {
+                add((E)stream.readObject());
+
+            }
+
+
+        } catch (Exception e) {
+
+        }
     }
 }
