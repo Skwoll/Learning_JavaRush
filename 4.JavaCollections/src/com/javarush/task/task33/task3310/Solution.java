@@ -1,9 +1,6 @@
 package com.javarush.task.task33.task3310;
 
-import com.javarush.task.task33.task3310.strategy.FileStorageStrategy;
-import com.javarush.task.task33.task3310.strategy.HashMapStorageStrategy;
-import com.javarush.task.task33.task3310.strategy.OurHashMapStorageStrategy;
-import com.javarush.task.task33.task3310.strategy.StorageStrategy;
+import com.javarush.task.task33.task3310.strategy.*;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -15,6 +12,8 @@ public class Solution {
         testStrategy(new HashMapStorageStrategy(),10000);
         testStrategy(new OurHashMapStorageStrategy(),10000);
         testStrategy(new FileStorageStrategy(),400);
+        testStrategy(new OurHashBiMapStorageStrategy(),10000);
+        testStrategy(new HashBiMapStorageStrategy(),10000);
 
     }
 

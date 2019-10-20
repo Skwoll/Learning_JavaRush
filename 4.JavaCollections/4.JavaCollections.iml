@@ -12,5 +12,6 @@
     <orderEntry type="library" exported="" name="jackson-core-2.9.8" level="project" />
     <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.26" level="application" />
     <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.23" level="application" />
+    <orderEntry type="library" name="guava-19.0" level="project" />
   </component>
 </module>
