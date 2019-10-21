@@ -1,7 +1,6 @@
 package com.javarush.task.task37.task3701;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 /* 
 Круговой итератор
