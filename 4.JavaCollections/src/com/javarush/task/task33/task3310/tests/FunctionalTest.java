@@ -26,7 +26,7 @@ public class FunctionalTest {
 
        Assert.assertEquals(s1,so1);
        Assert.assertEquals(s2,so2);
-       Assert.assertEquals(s3,so2);
+       Assert.assertEquals(s3,so3);
    }
 
    @Test
