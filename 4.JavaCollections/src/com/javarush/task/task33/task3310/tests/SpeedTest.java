@@ -34,13 +34,13 @@ Shortener (15)
 
  */
 public class SpeedTest {
-    private long getTimeToGetIds(Shortener shortener, Set<String> strings, Set<Long> ids){
+    public long getTimeToGetIds(Shortener shortener, Set<String> strings, Set<Long> ids){
         Date date = new Date();
         strings.forEach(s -> ids.add(shortener.getId(s)));
         return new Date().getTime() - date.getTime();
     }
 
-    private long getTimeToGetStrings(Shortener shortener, Set<Long> ids, Set<String> strings){
+    public long getTimeToGetStrings(Shortener shortener, Set<Long> ids, Set<String> strings){
         Date date = new Date();
         ids.forEach(aLong -> strings.add(shortener.getString(aLong)));
         return new Date().getTime() - date.getTime();
@@ -61,7 +61,7 @@ public class SpeedTest {
 
         Long time1 = getTimeToGetIds(shortener1, origStrings, ids1);
         Long time2 = getTimeToGetIds(shortener2, origStrings, ids2);
-        Assert.assertEquals(time1,time2);
+        Assert.assertTrue(time1>time2);
 
         Set<String> strings1 = new HashSet<>();
         Set<String> strings2 = new HashSet<>();
