@@ -27,15 +27,15 @@ public class Log {
     public Date LogDate;
     public Event LogEvent;
     public Status LogStatus;
-    public String TaskNumber;
+    public int TaskNumber;
 
-    public Log(String IP, String user, Date logDate, Event logEvent, Status logStatus, String taskNumber) {
+    public Log(String IP, String user, Date logDate, Event logEvent, Status logStatus, int taskNumber) {
         this.IP = IP;
         User = user;
         LogDate = logDate;
         LogEvent = logEvent;
         LogStatus = logStatus;
-        TaskNumber = taskNumber == null ? "" : taskNumber;
+        TaskNumber = taskNumber;
     }
     public Log (String str){
         try {
@@ -46,7 +46,7 @@ public class Log {
                 LogDate =        new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(values[2]);
                 LogEvent = Event.valueOf(values[3].split(" ")[0]);
                 LogStatus = Status.valueOf(values[4]);
-                TaskNumber = values[3].split(" ")[1];
+                TaskNumber = Integer.parseInt(values[3].split(" ")[1]);
             } else {
                 IP= values[0];
                 User =        values[1];
@@ -75,8 +75,8 @@ public class Log {
         User = user;
     }
 
-    public Date getLogDate() {
-        return LogDate;
+    public long getLogDate() {
+        return LogDate.getTime();
     }
 
     public void setLogDate(Date logDate) {
@@ -99,11 +99,11 @@ public class Log {
         LogStatus = logStatus;
     }
 
-    public String getTaskNumber() {
+    public int getTaskNumber() {
         return TaskNumber;
     }
 
-    public void setTaskNumber(String taskNumber) {
+    public void setTaskNumber(int taskNumber) {
         TaskNumber = taskNumber;
     }
 }

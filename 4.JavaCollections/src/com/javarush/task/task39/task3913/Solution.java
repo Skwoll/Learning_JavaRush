@@ -12,5 +12,18 @@ public class Solution {
         System.out.println(logParser.getIPsForUser("Eduard Petrovich Morozko",null, null));
         System.out.println(logParser.getIPsForEvent(Event.SOLVE_TASK,null, null));
         System.out.println(logParser.getIPsForStatus(Status.OK, null, null));
+        System.out.println("====================================");
+        System.out.println(logParser.getAllUsers());
+        System.out.println(logParser.getNumberOfUsers(null,null));
+        System.out.println(logParser.getNumberOfUserEvents("Eduard Petrovich Morozko",null,new Date()));
+        System.out.println(logParser.getUsersForIP("127.0.0.1",null,null));
+        System.out.println(logParser.getLoggedUsers(null,null));
+        System.out.println(logParser.getDownloadedPluginUsers(null,null));
+        System.out.println(logParser.getWroteMessageUsers(null,null));
+        System.out.println(logParser.getSolvedTaskUsers(null,null));
+        System.out.println(logParser.getSolvedTaskUsers(null,null,18));
+        System.out.println(logParser.getDoneTaskUsers(null,null));
+        System.out.println(logParser.getDoneTaskUsers(null,null,48));
+
     }
 }
