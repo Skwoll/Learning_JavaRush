@@ -33,6 +33,9 @@ public class Solution {
         System.out.println(logParser.getDateWhenUserDoneTask("Amigo",18,null,null));
         System.out.println(logParser.getDatesWhenUserWroteMessage("Amigo",null,null));
         System.out.println(logParser.getDatesWhenUserDownloadedPlugin("Eduard Petrovich Morozko",null,null));
+        System.out.println("====================================");
+        System.out.println(logParser.getAllSolvedTasksAndTheirNumber(null,null));
+        System.out.println(logParser.getAllDoneTasksAndTheirNumber(null,null));
 
     }
 }
