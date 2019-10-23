@@ -24,6 +24,15 @@ public class Solution {
         System.out.println(logParser.getSolvedTaskUsers(null,null,18));
         System.out.println(logParser.getDoneTaskUsers(null,null));
         System.out.println(logParser.getDoneTaskUsers(null,null,48));
+        System.out.println("====================================");
+        System.out.println(logParser.getDatesForUserAndEvent("Amigo1",Event.SOLVE_TASK, null,null));
+        System.out.println(logParser.getDatesWhenSomethingFailed(null,null));
+        System.out.println(logParser.getDatesWhenErrorHappened(null,null));
+        System.out.println(logParser.getDateWhenUserLoggedFirstTime("Amigo",null,null));
+        System.out.println(logParser.getDateWhenUserSolvedTask("Amigo",18,null,null));
+        System.out.println(logParser.getDateWhenUserDoneTask("Amigo",18,null,null));
+        System.out.println(logParser.getDatesWhenUserWroteMessage("Amigo",null,null));
+        System.out.println(logParser.getDatesWhenUserDownloadedPlugin("Eduard Petrovich Morozko",null,null));
 
     }
 }

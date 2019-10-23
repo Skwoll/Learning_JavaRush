@@ -79,6 +79,8 @@ public class Log {
         return LogDate.getTime();
     }
 
+    public Date getDate(){return LogDate;}
+
     public void setLogDate(Date logDate) {
         LogDate = logDate;
     }
