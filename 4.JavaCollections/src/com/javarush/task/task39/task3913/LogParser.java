@@ -6,7 +6,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Path;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
@@ -360,20 +364,77 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     //region implement QLQuery
     @Override
     public Set<Object> execute(String query) {
-        switch (query) {
-            case "get ip" :
-                return logs.stream().map(Log::getIP).collect(Collectors.toSet());
-            case "get user":
-                return logs.stream().map(Log::getUser).collect(Collectors.toSet());
-            case "get date":
-                return logs.stream().map(Log::getDate).collect(Collectors.toSet());
-            case "get event":
-                return logs.stream().map(Log::getLogEvent).collect(Collectors.toSet());
-            case "get status":
-                return logs.stream().map(Log::getLogStatus).collect(Collectors.toSet());
+        ParsedQuery parsedQuery = new ParsedQuery(query);
 
-            default: return null;
 
+            Set<Log> filtredLog = logs.stream().filter(log -> parsedQuery.field2 == null ? true:
+                               parsedQuery.field2.equalsIgnoreCase("ip") ? log.getIP().equalsIgnoreCase(parsedQuery.value1) : true
+                            && parsedQuery.field2.equalsIgnoreCase("user") ? log.getUser().equalsIgnoreCase(parsedQuery.value1) : true
+                            && parsedQuery.field2.equalsIgnoreCase("date") ? log.getLogDate()==parsedQuery.getValue1DateLong() : true
+                            && parsedQuery.field2.equalsIgnoreCase("event") ? log.getLogEvent().equals(Event.valueOf(parsedQuery.value1)) : true
+                            && parsedQuery.field2.equalsIgnoreCase("status") ? log.getLogStatus().equals(Status.valueOf(parsedQuery.value1)) : true
+            ).collect(Collectors.toSet());
+            switch (parsedQuery.field1) {
+                case "ip" :
+                    return filtredLog.stream().map(Log::getIP).collect(Collectors.toSet());
+                case "user":
+                    return filtredLog.stream().map(Log::getUser).collect(Collectors.toSet());
+                case "date":
+                    return filtredLog.stream().map(Log::getDate).collect(Collectors.toSet());
+                case "event":
+                    return filtredLog.stream().map(Log::getLogEvent).collect(Collectors.toSet());
+                case "status":
+                    return filtredLog.stream().map(Log::getLogStatus).collect(Collectors.toSet());
+
+                default: return null;
+
+            }
+
+    }
+
+
+
+    private class ParsedQuery {
+        String field1;
+        String field2;
+        String value1;
+
+        public ParsedQuery(String query) {
+             if (query.contains(" = \"")) {
+                Pattern p = Pattern.compile("get\\s(.*?)\\sfor\\s(.*?)\\s=\\s\"(.*)\"");
+                Matcher m = p.matcher(query);
+                m.find();
+                field1 = m.group(1);
+                field2 = m.group(2);
+                value1 = m.group(3);
+            } else {
+                Pattern p = Pattern.compile("^get\\s(.*?)$");
+                Matcher m = p.matcher(query);
+                m.find();
+                field1 = m.group(1);
+            }
+        }
+
+        public String getField1() {
+            return field1;
+        }
+
+        public String getField2() {
+            return field2;
+        }
+
+        public String getValue1() {
+            return value1;
+        }
+
+        public long getValue1DateLong(){
+
+            try {
+                 return value1 == null ? 0 : new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(value1).getTime();
+            } catch (ParseException e) {
+
+            }
+            return 0;
         }
     }
     //endregion
