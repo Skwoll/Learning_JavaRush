@@ -45,6 +45,15 @@ public class Solution {
         System.out.println("====================================");
         System.out.println(logParser.execute("get ip for user = \"amigo\""));
         System.out.println(logParser.execute("get event for date = \"30.01.2014 12:56:22\""));
+        System.out.println("====================================");
+        System.out.println(logParser.execute("get ip for user = \"Eduard Petrovich Morozko\" and date between \"11.12.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
+        System.out.println(logParser.execute("get date for user = \"Eduard Petrovich Morozko\" and date between \"11.12.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
+        System.out.println(logParser.execute("get event for user = \"Eduard Petrovich Morozko\" and date between \"11.12.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
+        System.out.println(logParser.execute("get status for user = \"Eduard Petrovich Morozko\" and date between \"11.12.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
+        System.out.println(logParser.execute("get user for user = \"Eduard Petrovich Morozko\" and date between \"11.12.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
+        System.out.println(logParser.execute("get ip for user = \"Eduard Petrovich Morozko\""));
+        System.out.println("====================================");
+        System.out.println(logParser.execute("get ip for user = \"Amigo\" and date between \"01.01.2012 0:00:00\" and \"01.01.2015 0:00:00\""));
 
     }
 }

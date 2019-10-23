@@ -75,7 +75,7 @@ public class Log {
         User = user;
     }
 
-    public long getLogDate() {
+    public long getLogDateLong() {
         return LogDate.getTime();
     }
 
