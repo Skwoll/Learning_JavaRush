@@ -1,9 +1,6 @@
 package com.javarush.task.task39.task3913;
 
-import com.javarush.task.task39.task3913.query.DateQuery;
-import com.javarush.task.task39.task3913.query.EventQuery;
-import com.javarush.task.task39.task3913.query.IPQuery;
-import com.javarush.task.task39.task3913.query.UserQuery;
+import com.javarush.task.task39.task3913.query.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,7 +9,7 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
     File[] files ;
     List<Log> logs = new ArrayList<>();
 
@@ -356,6 +353,28 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
                 && log.getLogDate() >= (after == null ? 0 : after.getTime())
                 && log.getLogDate() <= (before == null ? Long.MAX_VALUE : before.getTime()))
                                 .collect(Collectors.toMap(Log::getTaskNumber,i -> 1,Integer::sum));
+    }
+    //endregion
+
+
+    //region implement QLQuery
+    @Override
+    public Set<Object> execute(String query) {
+        switch (query) {
+            case "get ip" :
+                return logs.stream().map(Log::getIP).collect(Collectors.toSet());
+            case "get user":
+                return logs.stream().map(Log::getUser).collect(Collectors.toSet());
+            case "get date":
+                return logs.stream().map(Log::getDate).collect(Collectors.toSet());
+            case "get event":
+                return logs.stream().map(Log::getLogEvent).collect(Collectors.toSet());
+            case "get status":
+                return logs.stream().map(Log::getLogStatus).collect(Collectors.toSet());
+
+            default: return null;
+
+        }
     }
     //endregion
 }
