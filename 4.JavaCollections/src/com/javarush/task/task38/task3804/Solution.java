@@ -35,8 +35,8 @@ public class Solution {
     public static void main(String[] args) {
         try {
 //            FactoryException.ThrowExciption(ApplicationExceptionMessage.SOCKET_IS_CLOSED);
-             FactoryException.ThrowExciption(ApplicationExceptionMessage.UNHANDLED_EXCEPTION);
-        } catch (Exception e) {
+            throw  FactoryException.ThrowExciption(ApplicationExceptionMessage.UNHANDLED_EXCEPTION);
+        } catch (Throwable e) {
             e.printStackTrace();
         }
 
