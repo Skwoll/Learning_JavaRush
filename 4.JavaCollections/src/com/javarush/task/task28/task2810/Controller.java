@@ -1,8 +1,11 @@
 package com.javarush.task.task28.task2810;
 
 import com.javarush.task.task28.task2810.model.Provider;
+import com.javarush.task.task28.task2810.vo.Vacancy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Aggregator (2)
@@ -42,5 +45,20 @@ public class Controller {
         return "Controller{" +
                 "providers=" + Arrays.toString(providers) +
                 '}';
+    }
+
+    public void scan() {
+        List<Vacancy> vacancies = new ArrayList<>();
+        if (providers == null)
+            return;
+
+        for (Provider provider : providers) {
+            try {
+                vacancies.addAll(provider.getJavaVacancies("java"));
+            } catch (Exception e) {
+
+            }
+        }
+        System.out.println(vacancies.size());
     }
 }
