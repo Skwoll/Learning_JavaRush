@@ -1,5 +1,6 @@
 package com.javarush.task.task28.task2810;
 
+import com.javarush.task.task28.task2810.model.Model;
 import com.javarush.task.task28.task2810.model.Provider;
 import com.javarush.task.task28.task2810.vo.Vacancy;
 
@@ -31,34 +32,15 @@ import java.util.List;
  * 4. В классе Controller создай метод toString со стандартной реализацией.
  */
 public class Controller {
-    private Provider[] providers;
+    Model model;
 
-    public Controller(Provider... providers) {
-        if (providers == null || providers.length == 0) {
+    public Controller(Model model) {
+        if (model==null)
             throw new IllegalArgumentException();
-        }
-        this.providers = providers;
+        this.model = model;
     }
 
-    @Override
-    public String toString() {
-        return "Controller{" +
-                "providers=" + Arrays.toString(providers) +
-                '}';
-    }
-
-    public void scan() {
-        List<Vacancy> vacancies = new ArrayList<>();
-        if (providers == null)
-            return;
-
-        for (Provider provider : providers) {
-            try {
-                vacancies.addAll(provider.getJavaVacancies("java"));
-            } catch (Exception e) {
-
-            }
-        }
-        System.out.println(vacancies.size());
+    public void onCitySelect(String cityName){
+        model.selectCity(cityName);
     }
 }
