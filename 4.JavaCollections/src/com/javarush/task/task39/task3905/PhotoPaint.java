@@ -7,9 +7,9 @@ public class PhotoPaint {
 
         Color currentColor;
         try {
-            if (image[x]==null)
+            if (image[y]==null)
                 return false;
-            currentColor = image[x][y];
+            currentColor = image[y][x];
 
         } catch (IndexOutOfBoundsException ex) {
             return false;
@@ -27,13 +27,13 @@ public class PhotoPaint {
 
     public boolean paintFill(Color[][] image, int x, int y, Color desiredColor, Color currentColor) {
         try {
-            if ( currentColor != image[x][y]) {
+            if ( currentColor != image[y][x]) {
                 return false;
             }
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
-        image[x][y] = desiredColor;
+        image[y][x] = desiredColor;
         for (int i = 0; i < 360; i += 90) {
             try {
                 paintFill(image, x + (int) Math.cos(Math.toRadians(i)), y + (int) Math.sin(Math.toRadians(i)), desiredColor, currentColor);
