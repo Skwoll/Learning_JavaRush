@@ -7,7 +7,10 @@ public class PhotoPaint {
 
         Color currentColor;
         try {
+            if (image[x]==null)
+                return false;
             currentColor = image[x][y];
+
         } catch (IndexOutOfBoundsException ex) {
             return false;
         }
