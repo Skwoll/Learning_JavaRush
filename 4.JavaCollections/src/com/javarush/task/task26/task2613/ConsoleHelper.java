@@ -1,5 +1,7 @@
 package com.javarush.task.task26.task2613;
 
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,14 +12,17 @@ public class ConsoleHelper {
     public static void writeMessage(String message){
         System.out.println(message);
     }
-    public static String readString(){
+    public static String readString() throws InterruptOperationException {
         try {
-            return bis.readLine();
-        } catch (Exception e) {
+            String value = bis.readLine();
+            if (value.equalsIgnoreCase("exit"))
+                throw new InterruptOperationException();
+            return value;
+        } catch (IOException e) {
             return "";
         }
     }
-    public static String askCurrencyCode(){
+    public static String askCurrencyCode() throws InterruptOperationException{
         writeMessage("Введите 3-х значный код валюты.");
         String currencyCode = readString();
         while (currencyCode.length() !=3){
@@ -26,7 +31,7 @@ public class ConsoleHelper {
         }
         return currencyCode.toUpperCase();
     }
-    public static String[] getValidTwoDigits(String currencyCode){
+    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException{
         writeMessage("Введите номинал и количество банкнот через пробел (целые положительные числа)");
         String result = readString();
         while (result == null || !result.matches("\\d+\\s\\d+")){
@@ -34,6 +39,20 @@ public class ConsoleHelper {
             result = readString();
         }
         return result.split(" ");
+
+    }
+    public static Operation askOperation()throws InterruptOperationException{
+        writeMessage("Выберити действие 1 - INFO, 2 - DEPOSIT, 3 - WITHDRAW, 4 - EXIT");
+
+        while (true){
+            try{
+               int oprNumber = Integer.parseInt(readString());
+               return Operation.getAllowableOperationByOrdinal(oprNumber);
+            }
+            catch (Exception e){
+               writeMessage("Неверное действие. Выберити действие 1 - INFO, 2 - DEPOSIT, 3 - WITHDRAW, 4 - EXIT");
+            }
+        }
 
     }
 }

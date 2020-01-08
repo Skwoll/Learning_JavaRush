@@ -1,7 +1,6 @@
 package com.javarush.task.task26.task2613;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class CurrencyManipulatorFactory {
     private static Map<String,CurrencyManipulator> map = new HashMap<>();
@@ -14,5 +13,8 @@ public final class CurrencyManipulatorFactory {
 
     private CurrencyManipulatorFactory() {
         throw new UnsupportedOperationException();
+    }
+    public static Collection<CurrencyManipulator> getAllCurrencyManipulators(){
+        return map.values();
     }
 }
