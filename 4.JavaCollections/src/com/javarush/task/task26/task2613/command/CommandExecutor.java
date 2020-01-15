@@ -10,6 +10,7 @@ public class CommandExecutor  {
     private static final Map<Operation, Command> allKnownCommandsMap = new HashMap<>();
 
     static {
+        allKnownCommandsMap.put(Operation.LOGIN,new LoginCommand());
         allKnownCommandsMap.put(Operation.INFO,new InfoCommand());
         allKnownCommandsMap.put(Operation.EXIT,new ExitCommand());
         allKnownCommandsMap.put(Operation.WITHDRAW,new WithdrawCommand());
