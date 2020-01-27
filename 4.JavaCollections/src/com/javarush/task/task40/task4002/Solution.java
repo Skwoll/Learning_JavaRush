@@ -32,7 +32,7 @@ import java.util.List;
 public class Solution {
     public static void main(String[] args) throws Exception {
         Solution solution = new Solution();
-        solution.sendPost("https://requestbin.jumio.com/187eaiw1", "name=zapp&mood=good&locale=&id=777");
+        solution.sendPost("https://requestbin.jumio.com/13c0pv51", "name=zapp&mood=good&locale=&id=777");
     }
 
     public void sendPost(String url, String urlParameters) throws Exception {
