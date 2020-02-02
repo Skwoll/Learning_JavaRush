@@ -8,11 +8,13 @@ public class Controller {
     private Model model;
 
     public Controller() {
-        this.view = new View(this);
-        this.model = new Model();
+        view = new View(this);
+        model = new Model();
+        view.init();
     }
 
     public static void main(String[] args) {
+        Controller controller = new Controller();
 
     }
 }
