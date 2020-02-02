@@ -3,10 +3,10 @@ package com.javarush.task.task34.task3410.model;
 import java.awt.*;
 
 public abstract class GameObject {
-    int x;
-    int y;
-    int width;
-    int height;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
 
     //region Methods
     public abstract void draw(Graphics graphics);
