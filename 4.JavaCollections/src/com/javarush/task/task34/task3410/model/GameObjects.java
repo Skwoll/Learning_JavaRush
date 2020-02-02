@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GameObjects {
-    Set<Wall> walls;
-    Set<Box> boxes;
-    Set<Home> homes;
-    Player player;
+    private Set<Wall> walls;
+    private Set<Box> boxes;
+    private Set<Home> homes;
+    private Player player;
 
     //region Constructors
     public GameObjects(Set<Wall> walls, Set<Box> boxes, Set<Home> homes, Player player) {

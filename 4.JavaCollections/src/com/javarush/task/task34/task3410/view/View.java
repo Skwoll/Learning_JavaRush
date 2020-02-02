@@ -42,7 +42,7 @@ public class View extends JFrame {
     }
     public void completed(int level) {
         update();
-        JOptionPane.showMessageDialog(this,String.format("Вы прошли урвень %s. /r/nПоздраляем!",level));
+        JOptionPane.showMessageDialog(this,String.format("Вы прошли урвень %s. \r\nПоздраляем!",level));
         controller.startNextLevel();
     }
     //endregion

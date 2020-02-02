@@ -12,11 +12,11 @@ public class Controller implements EventListener{
     //region Constructors
     public Controller() {
         view = new View(this);
-        view.setEventListener(this);
         model = new Model();
-        model.setEventListener(this);
-        model.restart();
         view.init();
+        view.setEventListener(this);
+        model.restart();
+        model.setEventListener(this);
     }
     //endregion
 
