@@ -2,6 +2,7 @@ package com.javarush.task.task34.task3410.view;
 
 import com.javarush.task.task34.task3410.controller.EventListener;
 import com.javarush.task.task34.task3410.model.Box;
+import com.javarush.task.task34.task3410.model.GameObject;
 import com.javarush.task.task34.task3410.model.Home;
 import com.javarush.task.task34.task3410.model.Player;
 
@@ -14,9 +15,13 @@ public class Field extends JPanel {
 
     //region Methods
     public void paint(Graphics g) {
-        new Box(300,10).draw(g);
-        new Player(50,50).draw(g);
-        new Home(100,100).draw(g);
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,view.getWidth(),view.getHeight());
+
+        for (GameObject o :
+                view.getGameObjects().getAll()) {
+            o.draw(g);
+        }
 
     }
     //endregion
