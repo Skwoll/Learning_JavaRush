@@ -20,6 +20,7 @@ public class Field extends JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0,0,view.getWidth(),view.getHeight());
 
+        if(view != null && view.getGameObjects() != null)
         for (GameObject o :
                 view.getGameObjects().getAll()) {
             o.draw(g);

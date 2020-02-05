@@ -4,6 +4,7 @@ import com.javarush.task.task34.task3410.controller.Controller;
 import com.javarush.task.task34.task3410.controller.EventListener;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Model {
@@ -12,7 +13,7 @@ public class Model {
     GameObjects gameObjects;
     int currentLevel = 1;
     LevelLoader levelLoader = new LevelLoader(new File( "4.JavaCollections/src/"+
-            Controller.class.getPackage().getName().replace("[.]","/")+"/res/levels.txt").toPath());
+            Controller.class.getPackage().getName().replace(".","/")+"/../res/levels.txt").toPath());
 
     //region Properties
     public void setEventListener(EventListener eventListener) {
@@ -108,7 +109,8 @@ public class Model {
         return false;
     }
     public void checkCompletion(){
-        Set<Home> homes = getGameObjects().getHomes();
+        Set<Home> homes = new HashSet<>(getGameObjects().getHomes());
+
         for (Box box :
                 gameObjects.getBoxes()) {
             homes.removeIf(home -> home.getX() == box.getX() && home.getY() == box.getY());
