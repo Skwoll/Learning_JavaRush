@@ -1,5 +1,7 @@
 package com.javarush.task.task21.task2113;
 
+import java.util.Collections;
+
 public class Horse {
     private String name;
     private double speed;
@@ -17,6 +19,9 @@ public class Horse {
     }
 
     public void print(){
+        int i = (int)distance;
+        String s = String.join("", Collections.nCopies(i, "."));
+        System.out.println(s+name);
 
     }
 
