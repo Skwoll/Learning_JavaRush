@@ -15,6 +15,7 @@ public class Hippodrome {
         tmpHorses.add(new Horse("Marshmallow", 3d, 0d));
         game = new Hippodrome(tmpHorses);
         game.run();
+        game.printWinner();
     }
     public void run(){
         for (int i = 0; i < 100; i++) {
@@ -26,7 +27,6 @@ public class Hippodrome {
                 e.printStackTrace();
             }
         }
-        printWinner();
 
     }
     public void move(){
