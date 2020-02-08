@@ -13,6 +13,15 @@ public class Hippodrome {
         tmpHorses.add(new Horse("Marshmallow", 3d, 0d));
         game = new Hippodrome(tmpHorses);
     }
+    public void run(){
+
+    }
+    public void move(){
+
+    }
+    public void print(){
+
+    }
 
     public List<Horse> getHorses() {
         return horses;
