@@ -12,4 +12,8 @@ public class Hippodrome {
     public List<Horse> getHorses() {
         return horses;
     }
+
+    public Hippodrome(List<Horse> horses) {
+        this.horses = horses;
+    }
 }
