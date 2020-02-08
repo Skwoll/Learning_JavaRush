@@ -1,6 +1,8 @@
 package com.javarush.task.task21.task2113;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Hippodrome {
@@ -24,6 +26,7 @@ public class Hippodrome {
                 e.printStackTrace();
             }
         }
+        printWinner();
 
     }
     public void move(){
@@ -31,13 +34,19 @@ public class Hippodrome {
 
     }
     public void print(){
-        horses.forEach(Horse::print);
         for (int i = 0; i < 10; i++) {
             System.out.println();
         }
-        
+        horses.forEach(Horse::print);
+
     }
 
+    public Horse getWinner(){
+        return Collections.max(horses, (o1, o2) -> (int) (o1.getDistance() - o2.getDistance()));
+    }
+    public void printWinner(){
+        System.out.println(String.format("Winner is %s!",getWinner().getName()));
+    }
     public List<Horse> getHorses() {
         return horses;
     }
