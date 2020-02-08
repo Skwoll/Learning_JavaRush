@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hippodrome {
+    public static Hippodrome game;
     private List<Horse> horses= new ArrayList<>();
     public static void main(String[] args) {
-
+        List<Horse> tmpHorses = new ArrayList<>();
+        tmpHorses.add(new Horse("Apple", 3d, 0d));
+        tmpHorses.add(new Horse("Blueberry", 3d, 0d));
+        tmpHorses.add(new Horse("Marshmallow", 3d, 0d));
+        game = new Hippodrome(tmpHorses);
     }
 
     public List<Horse> getHorses() {
