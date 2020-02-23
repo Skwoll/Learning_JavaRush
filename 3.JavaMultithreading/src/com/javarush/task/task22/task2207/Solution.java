@@ -23,14 +23,14 @@ public class Solution {
         }
         List<String> raw = new ArrayList<>(Arrays.asList(sb.toString().split("[ ]")));
 
-        for (String s :
-                raw) {
+        while (raw.size()>0) {
+            String s = raw.get(0);
             String sr = new StringBuilder(s).reverse().toString();
+            raw.remove(0);
             if (s.length() > 0 && raw.contains(sr)) {
+                raw.remove(sr);
                 Pair p = new Pair(s,sr);
-                if (!result.contains(p) && !result.contains(new Pair(sr,s)))
-                    result.add(new Pair(s, sr));
-
+                result.add(p);
             }
         }
         result.forEach(System.out::println);
