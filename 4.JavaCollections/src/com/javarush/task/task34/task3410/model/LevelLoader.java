@@ -1,15 +1,16 @@
 package com.javarush.task.task34.task3410.model;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import com.javarush.task.task34.task3410.controller.Controller;
+
+import java.io.*;
+import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 
 public class LevelLoader {
-    private Path levels;
-    public LevelLoader(Path levels) {
+    private String levels;
+    public LevelLoader(String levels) {
         this.levels = levels;
     }
     public GameObjects getLevel(int level){
@@ -20,8 +21,7 @@ public class LevelLoader {
         int realLvl = level % 60 ;
         realLvl = realLvl == 0 ? 60 : realLvl;
 
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(levels.toFile()))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Controller.class.getResourceAsStream(levels)))) {
             int readLevel = 0;
             int x;
             int y = Model.FIELD_CELL_SIZE / 2;

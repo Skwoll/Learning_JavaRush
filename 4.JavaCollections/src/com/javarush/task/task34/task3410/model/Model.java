@@ -4,6 +4,8 @@ import com.javarush.task.task34.task3410.controller.Controller;
 import com.javarush.task.task34.task3410.controller.EventListener;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,8 +14,8 @@ public class Model {
     EventListener eventListener;
     GameObjects gameObjects;
     int currentLevel = 1;
-    LevelLoader levelLoader = new LevelLoader(new File( "4.JavaCollections/src/"+
-            Controller.class.getPackage().getName().replace(".","/")+"/../res/levels.txt").toPath());
+    LevelLoader levelLoader = new LevelLoader("/com/javarush/task/task34/task3410/res/levels.txt");
+
 
     //region Properties
     public void setEventListener(EventListener eventListener) {

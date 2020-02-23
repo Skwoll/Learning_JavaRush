@@ -17,6 +17,7 @@ public class Controller implements EventListener{
         view.setEventListener(this);
         model.restart();
         model.setEventListener(this);
+        view.update();
     }
     //endregion
 
