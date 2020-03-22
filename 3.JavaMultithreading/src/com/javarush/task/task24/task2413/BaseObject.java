@@ -41,7 +41,7 @@ public abstract class BaseObject {
     public boolean isIntersec(BaseObject o){
         double dX = o.x - this.x;
         double dY = o.y - this.y;
-        double maxRadius = Math.max(o.radius, this.radius);
+        double maxRadius = o.radius > this.radius ? o.radius : this.radius;
         return maxRadius >= Math.sqrt(dX*dX + dY*dY);
     }
 
