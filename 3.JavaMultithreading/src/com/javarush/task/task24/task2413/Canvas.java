@@ -52,4 +52,14 @@ public class Canvas {
             }
         }
     }
+
+    public void clear(){
+        matrix = new char[height+2][width+2];
+    }
+
+    public void print(){
+        for (int i = 0; i < matrix.length; i++) {
+            System.out.println(String.valueOf(matrix[i]));
+        }
+    }
 }
