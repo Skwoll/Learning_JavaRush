@@ -19,7 +19,16 @@ public class Stand extends BaseObject{
 
     @Override
     public void move() {
+        x+=direction*speed;
 
+    }
+
+    public void moveLeft(){
+        direction = -1;
+    }
+
+    public void moveRight(){
+        direction = 1;
     }
 
     public Stand(double x, double y, double radius) {
