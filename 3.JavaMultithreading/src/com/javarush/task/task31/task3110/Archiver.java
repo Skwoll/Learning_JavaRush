@@ -12,20 +12,18 @@ import java.util.Scanner;
 
 public class Archiver {
     public static void main(String[] args) {
-        Operation operation;
+        Operation operation = null;
 
-        while (true) {
+        do {
             try {
                 operation = askOperation();
-                if (operation == Operation.EXIT)
-                    break;
                 CommandExecutor.execute(operation);
             } catch (WrongZipFileException e) {
                 ConsoleHelper.writeMessage("Вы не выбрали файл архива или выбрали неверный файл." );
             } catch (Throwable e) {
                 ConsoleHelper.writeMessage("Произошла ошибка. Проверьте введенные данные.");
             }
-        }
+        } while(operation != operation.EXIT);
 //        Scanner scanner = new Scanner(new InputStreamReader(System.in));
 //        System.out.println("Введите путь к архиву");
 //        String archPath = scanner.nextLine();
